@@ -1,0 +1,29 @@
+# --- Python / build artifacts ---
+.venv/
+.venv-package/
+build/
+dist/
+runtime/
+*.egg-info/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# --- Media / recordings ---
+*.wav
+!examples/hello_afsk.wav
+*.flac
+recordings/
+data/rx/
+
+# --- Local config (copy config.example.toml -> config.toml) ---
+config.toml
+
+# --- AI work files (kept locally, not published) ---
+RadioLab_Agent_Development_Prompt.md
+RadioLab_Development_Plan_Product_V0.1_to_V1.0.md
+PROGRESS.md
+docs/
+
+# --- Experiment data & third-party tools ---
+2026_10_29_ISS_ASFK/

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "radiolab"
+version = "0.3.0.dev0"
+description = "离线 AFSK 文本与受控无线电音频实验"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24", "scipy>=1.10", "soundfile>=0.12"]
+
+[project.optional-dependencies]
+devices = ["sounddevice>=0.4", "pyserial>=3.5"]
+sstv = ["Pillow>=9"]
+test = ["pytest>=7"]
+gui = ["PySide6-Essentials>=6.10,<6.12"]
+
+[project.scripts]
+radiolab = "radiolab.cli:main"
+radiolab-gui = "radiolab.gui:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

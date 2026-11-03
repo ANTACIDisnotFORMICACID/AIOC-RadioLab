@@ -1,0 +1,21 @@
+# 复制为 config.toml 后，先用 radiolab devices 选择实际设备。
+[audio]
+tx_device = ""
+rx_device = ""
+gain = 0.1
+
+[ptt]
+port = ""
+firmware = ""              # 仅台架确认 1.2+ 后填写 "1.2+"
+bench_verified = false      # 无辐射台架确认打开串口不会误按 PTT 后才可改为 true
+pre_delay_s = 0.3
+tail_delay_s = 0.2
+max_tx_seconds = 60.0
+
+[safety]
+legal_operation_confirmed = false
+
+[radio]
+# frequency_hz 和 power_setting 仅记入历史；软件不会设置手台。由操作者自行填入已确认值。
+# frequency_hz = <实际合法频率的 Hz 整数>
+# power_setting = "<手台功率档位>"

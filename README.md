@@ -2,6 +2,34 @@
 
 RadioLab 将不超过 32 字节的 UTF-8 文本封装为自定义帧，转换成 AFSK 音频，并可从录制的 WAV 恢复且验证 CRC。发给 AIOC 的是 **PCM 音频**，FM 调制由手台完成。自写 SSTV 六模式已与独立 Rust 项目双向离线互验，其中五模式还与 Open-SSTV 双向互验；Robot 模式颜色缩放有差异。AIOC 实机、双手台射频链路及 MMSSTV/Android 等接收端尚未验证。
 
+## 下载与安装
+
+从 [GitHub 下载源码 ZIP](https://github.com/ANTACIDisnotFORMICACID/AIOC-RadioLab/archive/refs/heads/master.zip)，解压后在项目根目录打开 Windows PowerShell。也可以通过 [Releases 页面](https://github.com/ANTACIDisnotFORMICACID/AIOC-RadioLab/releases)下载带版本号的源码归档。当前源码预览需要 Python 3.11 或更新版本：
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install '.[gui,devices,sstv]'
+.\.venv\Scripts\radiolab.exe text decode examples\hello_afsk.wav
+.\.venv\Scripts\radiolab-gui.exe
+```
+
+若只需命令行离线编解码，可安装 `python -m pip install .`；音频设备、串口和图形界面由上面的可选依赖提供。首次启动前可先阅读 [GUI 快速操作](docs/gui_quickstart.md) 和 [发布门槛](docs/release_gate.md)。本机保留的旧 Windows 目录包对应早期代码，不能当作当前版本的安装包。
+
+## 项目目录
+
+| 路径 | 用途 |
+|---|---|
+| `src/radiolab/` | AFSK、SSTV、音频、PTT、历史及 CLI/GUI 的当前源码 |
+| `tests/` | 自动化回归测试；`examples/` 存放公开的离线测试素材 |
+| `packaging/`、`scripts/` | Windows 启动入口、打包和许可审计、SSTV 离线互验脚本 |
+| `docs/` | 协议、操作、互验和发布门槛的详细记录 |
+| `runtime/` | 本机生成文件与实验数据，已被 Git 忽略；其中 `sstv_comparison_*` 是文档引用的互验证据，`qt-source-6.11.3/` 和 `graphics-source-candidates/` 是打包用源码候选缓存 |
+| `dist/windows-20261030-021535/` | 唯一保留的旧 Windows 预览包，早于当前 SSTV/GUI 重构；验证当前源码须重新打包 |
+| `2026_10_29_ISS_ASFK/` | ISS AFSK 录音与分析记录，不属于应用运行依赖 |
+| `.venv/` | 本机开发环境，可重建，已被 Git 忽略 |
+
+`runtime/` 中的个人录音、历史记录和互验原始文件应按各自用途检查后清理；删除历史引用的媒体会在界面中显示为“文件缺失”。Python 缓存、`src/radiolab.egg-info/` 与临时编码输出可由安装或运行再次生成。
+
 ## 安装与离线演示
 
 Windows PowerShell，Python 3.11+：
@@ -56,7 +84,9 @@ CLI/GUI 的 SSTV 编解码只调用内置算法，旧外部后端选择和程序
 
 ## 来源与许可
 
-本地 FM 项目 `D:\homework\电磁学小论文\无线电\算法进度` 的 `signals.py`（`bits_to_waveform`）、`channel.py`（`awgn`）、`metrics.py`（`dbfs` 等）可作为纯 DSP 思路；`audioio.py` 的设备选择、播放和录音与设备耦合，需分别校验输入/输出并重构。`modulation.py` 的 FM IQ 调制及 FM 鉴频只适用于软件仿真/将来 SDR 路径。该 FM 项目根目录未发现 LICENSE；RadioLab 的协议、AFSK 与音频适配为独立编写，**没有直接复制原项目源码**。如果今后复制源码，须先取得明确授权或核实许可证并保留要求的声明。
+RadioLab 源码以 [MIT 许可证](LICENSE)发布。随项目安装的第三方依赖和独立 Windows 包内的组件各自适用其许可证；Windows 包的收集清单与仍待核对事项见 [发布门槛](docs/release_gate.md)。
+
+RadioLab 的协议、AFSK 与音频适配为独立编写，未复制其他项目源码。SSTV 模式时序依据 [JL Barber 的提案](https://www.classicsstv.com/downloads/daytonpaper.pdf)，算法独立编写；第三方软件仅用于离线互验，不属于运行依赖。
 
 官方 AIOC [Getting Started](https://github.com/skuep/AIOC/wiki/Getting-Started) 说明：音频接口为单声道输入/输出，首选 48 kHz；固件 1.2.0 起串口 PTT 为 DTR=1、RTS=0，旧固件 DTR=1 即按下。当前代码仅允许经台架确认的 1.2+ 配置，不能把打开 COM 口视为安全。SSTV 模式时序依据 [JL Barber 的提案](https://www.classicsstv.com/downloads/daytonpaper.pdf)，算法独立编写，未复制其他 SSTV 项目源码。
 

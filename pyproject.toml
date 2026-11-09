@@ -1,13 +1,32 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77.0.3"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "radiolab"
 version = "0.3.0.dev0"
 description = "离线 AFSK 文本与受控无线电音频实验"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.11"
+keywords = ["AFSK", "SSTV", "amateur-radio", "AIOC"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Communications",
+]
 dependencies = ["numpy>=1.24", "scipy>=1.10", "soundfile>=0.12"]
+
+[project.urls]
+Homepage = "https://github.com/ANTACIDisnotFORMICACID/AIOC-RadioLab"
+Repository = "https://github.com/ANTACIDisnotFORMICACID/AIOC-RadioLab"
+Issues = "https://github.com/ANTACIDisnotFORMICACID/AIOC-RadioLab/issues"
 
 [project.optional-dependencies]
 devices = ["sounddevice>=0.4", "pyserial>=3.5"]
@@ -17,6 +36,8 @@ gui = ["PySide6-Essentials>=6.10,<6.12"]
 
 [project.scripts]
 radiolab = "radiolab.cli:main"
+
+[project.gui-scripts]
 radiolab-gui = "radiolab.gui:main"
 
 [tool.setuptools.packages.find]

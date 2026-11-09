@@ -1,0 +1,6 @@
+include README.md CONTRIBUTING.md RELEASE_NOTES.md LICENSE config.example.toml
+recursive-include docs *.md *.txt
+recursive-include examples *.png *.wav
+recursive-include packaging *.py
+recursive-include scripts *.py *.ps1
+recursive-include tests *.py

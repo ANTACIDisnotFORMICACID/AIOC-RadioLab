@@ -1,0 +1,42 @@
+name: Python CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: python -m pip install -e '.[gui,devices,sstv,test]'
+      - name: Test
+        run: python -m pytest -q
+      - name: Check dependencies
+        run: python -m pip check
+
+  source-package:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Build and inspect source distributions
+        run: |
+          python -m pip install build twine
+          python -m build
+          python -m twine check dist/*

@@ -74,6 +74,7 @@ if (Test-Path -LiteralPath (Join-Path $output "radiolab-gui\_internal\icuuc.dll"
 
 Copy-Item -LiteralPath (Join-Path $repo "config.example.toml") -Destination $output
 Copy-Item -LiteralPath (Join-Path $repo "README.md") -Destination $output
+Copy-Item -LiteralPath (Join-Path $repo "LICENSE") -Destination $output
 Copy-Item -LiteralPath (Join-Path $repo "docs") -Destination (Join-Path $output "docs") -Recurse
 New-Item -ItemType Directory -Path (Join-Path $output "examples") | Out-Null
 Copy-Item -LiteralPath (Join-Path $repo "examples\test_image.png") -Destination (Join-Path $output "examples")

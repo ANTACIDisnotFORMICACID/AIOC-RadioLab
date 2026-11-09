@@ -97,7 +97,7 @@ V0.2 的 SQLite 历史迁移已可离线试用：`radiolab history migrate --sou
 
 V0.3 可用 `radiolab history export --database runtime/history.sqlite3 -o runtime/history-export.zip` 导出 SQLite 中的全部记录和现存 WAV、图片、解码日志；GUI 的“导出历史 ZIP”提供同样功能。ZIP 含 `entries.jsonl` 和 `manifest.json`，媒体只复制一次、附 SHA-256；缺失文件在清单中标出。目标 ZIP 必须是新路径，源数据库与媒体不会改写。导出包可能包含私人文本和原始文件路径，请妥善保管；目前没有从 ZIP 导回 SQLite 的功能。
 
-V0.3 桌面终端预览可在独立虚拟环境安装并运行；当前包版本为 `0.3.0.dev0`，协议帧仍是 v0.1：
+V0.3 桌面终端预览可在独立虚拟环境安装并运行；当前包版本为 `0.3.0.dev1`，协议帧仍是 v0.1：
 
 ```powershell
 python -m venv .venv
@@ -148,4 +148,4 @@ Pop-Location
 
 目录包包含构建环境生成的 `third_party_licenses/THIRD_PARTY_NOTICES.md` 和可收集的许可文件，包括与当前版本对应的 Qt 开源许可文本。使用 Conda Python 构建时，另生成 `CONDA_NATIVE_BINARIES.md`：按包内实际文件与 Conda 包缓存哈希核对来源，并收集对应许可文本。可选 `-QtSourceCache`、`-MesaSourceCache`、`-LLVMSourceCache` 可附上已核对的源码候选归档；Microsoft/Qt 原生库的实际分发条件、完整对应源码、实际换库运行和项目自身许可仍标为待完成，当前目录包仅供预览。
 
-当前 `0.3.0.dev0` 为软件预览，不宣称 V1.0 或硬件兼容性已完成。
+当前 `0.3.0.dev1` 为软件预览，不宣称 V1.0 或硬件兼容性已完成。

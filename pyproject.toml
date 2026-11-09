@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "radiolab"
-version = "0.3.0.dev0"
+version = "0.3.0.dev1"
 description = "离线 AFSK 文本与受控无线电音频实验"
 readme = "README.md"
 license = "MIT"

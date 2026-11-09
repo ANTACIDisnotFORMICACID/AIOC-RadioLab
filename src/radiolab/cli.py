@@ -1,6 +1,7 @@
 """RadioLab 命令行。默认只生成 WAV，不访问发射硬件。"""
 import argparse
 from datetime import datetime, timedelta, timezone
+from io import TextIOWrapper
 from pathlib import Path
 import sys
 
@@ -79,6 +80,10 @@ def parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # 英文 Windows 的重定向标准输出可能使用 cp1252，无法编码中文提示。
+    for stream in (sys.stdout, sys.stderr):
+        if isinstance(stream, TextIOWrapper):
+            stream.reconfigure(encoding="utf-8", errors="backslashreplace")
     args = parser().parse_args(argv)
     try:
         if args.command == "devices":

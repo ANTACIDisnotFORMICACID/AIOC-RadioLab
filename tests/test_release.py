@@ -3,7 +3,10 @@ from pathlib import Path
 from types import SimpleNamespace
 import hashlib
 import json
+import os
 import runpy
+import subprocess
+import sys
 import tarfile
 import tomllib
 from email.message import Message
@@ -19,6 +22,20 @@ def test_package_and_runtime_versions_match():
     root = Path(__file__).resolve().parents[1]
     metadata = tomllib.loads((root / "pyproject.toml").read_text(encoding="utf-8"))
     assert metadata["project"]["version"] == __version__
+
+
+def test_cli_decodes_on_non_unicode_windows_console(tmp_path):
+    root = Path(__file__).resolve().parents[1]
+    fixture = root / "examples" / "hello_afsk.wav"
+    env = {**os.environ, "PYTHONIOENCODING": "cp1252"}
+    result = subprocess.run(
+        [sys.executable, "-c", "from radiolab.cli import main; raise SystemExit(main())",
+         "text", "decode", str(fixture)],
+        cwd=tmp_path, env=env, capture_output=True, check=False,
+    )
+    assert result.returncode == 0, result.stderr.decode("utf-8", errors="replace")
+    assert "CRC OK" in result.stdout.decode("utf-8")
+    assert "HELLO WORLD" in result.stdout.decode("utf-8")
 
 
 def test_license_collector_copies_text_and_flags_qt_gap(tmp_path):
